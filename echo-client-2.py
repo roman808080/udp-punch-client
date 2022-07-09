@@ -9,7 +9,7 @@
 import socket
 import time
 
-MY_ID=b'1'
+MY_ID=b'2'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
