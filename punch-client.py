@@ -23,8 +23,10 @@ payload = None
 
 while wait:
       sent = sock.sendto(MY_ID, server)
+      print("Client local name: ", sock.getsockname())
+
       payload, client_address = sock.recvfrom(1000)
-      print("Echoing data back to ", str(client_address), ": ", payload)
+      print("Getting data back from: ", str(client_address), ": ", payload)
 
       if payload == b's:wait':
             time.sleep(1)

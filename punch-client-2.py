@@ -9,7 +9,7 @@
 import socket
 import time
 
-MY_ID=b'2'
+MY_ID=b'1'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -23,6 +23,8 @@ payload = None
 
 while wait:
       sent = sock.sendto(MY_ID, server)
+      print("Client local name: ", socket.getsockname())
+
       payload, client_address = sock.recvfrom(1000)
       print("Echoing data back to ", str(client_address), ": ", payload)
 
