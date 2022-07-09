@@ -18,13 +18,41 @@ server_port = 31337
 
 server = (server_address, server_port)
 
-while True:
+wait = True
+payload = None
+
+while wait:
       sent = sock.sendto(MY_ID, server)
       payload, client_address = sock.recvfrom(1000)
       print("Echoing data back to ", str(client_address), ": ", payload)
 
-      # address = payload.decode().split(':')
-      # address[1] = int(address[1])
-      # address = ('0.0.0.0', address[1])
+      if payload == b's:wait':
+            time.sleep(1)
+      else:
+            wait = False
 
+
+print("Current payload: ", payload)
+resopnse_from_server = payload.decode().split(':')
+peer_address = None
+
+if resopnse_from_server[0] == 's' and resopnse_from_server[1] == 'connect':
+      print("We have a peer: ", resopnse_from_server[2], resopnse_from_server[3])
+
+      peer_address = (resopnse_from_server[2], int(resopnse_from_server[3]))
+      message = b'c:punch'
+      attempts = 5
+
+      for _ in range(attempts):
+            sent = sock.sendto(message, peer_address)
+            print('Message: ', str(message) + " Peer address: ", peer_address, " Sent: ", sent)
+            time.sleep(0.5)
+else:
+      print("Unknown message: ", resopnse_from_server[0], resopnse_from_server[1])
+      exit(1)
+
+while True:
+      sent = sock.sendto(b'c:hello', peer_address)
+      payload, recv_from_addr = sock.recvfrom(1000)
+      print("Message recv: ", str(payload), " Expected addr: ", peer_address, " Actual addr: ", recv_from_addr)
       time.sleep(1)
