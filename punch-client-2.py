@@ -8,12 +8,13 @@
 
 import socket
 import time
+import os
 
 MY_ID=b'2'
 
 server_address = '132.145.58.228'
 server_port = 31337
-client_port = 4000 
+client_port = 4000
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(('0.0.0.0', client_port))
@@ -55,8 +56,18 @@ else:
       print("Unknown message: ", resopnse_from_server[0], resopnse_from_server[1])
       exit(1)
 
+hello_amount = 0
 while True:
       sent = sock.sendto(b'c:hello', peer_address)
       payload, recv_from_addr = sock.recvfrom(1000)
+
+      if payload == b'c:hello':
+            hello_amount += 1
+
       print("Message recv: ", str(payload), " Expected addr: ", peer_address, " Actual addr: ", recv_from_addr)
       time.sleep(1)
+
+      if hello_amount > 2:
+            break
+
+os.system(f'./server -t "127.0.0.1:22" -l "0.0.0.0:4000" -mode fast3 -nocomp -sockbuf 16777217 --crypt none')
