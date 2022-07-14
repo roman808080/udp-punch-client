@@ -9,12 +9,14 @@
 import socket
 import time
 
-MY_ID=b'1'
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+MY_ID=b'2'
 
 server_address = '132.145.58.228'
 server_port = 31337
+client_port = 4000 
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(('0.0.0.0', client_port))
 
 server = (server_address, server_port)
 
@@ -23,10 +25,10 @@ payload = None
 
 while wait:
       sent = sock.sendto(MY_ID, server)
-      print("Client local name: ", socket.getsockname())
+      print("Client local name: ", sock.getsockname())
 
       payload, client_address = sock.recvfrom(1000)
-      print("Echoing data back to ", str(client_address), ": ", payload)
+      print("Getting data back from: ", str(client_address), ": ", payload)
 
       if payload == b's:wait':
             time.sleep(1)

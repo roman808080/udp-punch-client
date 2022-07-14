@@ -11,10 +11,12 @@ import time
 
 MY_ID=b'1'
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
 server_address = '132.145.58.228'
 server_port = 31337
+client_port = 22500 
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(('0.0.0.0', client_port))
 
 server = (server_address, server_port)
 
