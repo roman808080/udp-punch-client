@@ -70,4 +70,5 @@ while True:
       if hello_amount > 2:
             break
 
+sock.close()
 os.system(f'./server -t "127.0.0.1:22" -l "0.0.0.0:4000" -mode fast3 -nocomp -sockbuf 16777217 --crypt none')

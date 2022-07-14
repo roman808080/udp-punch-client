@@ -70,4 +70,5 @@ while True:
       if hello_amount > 2:
             break
 
+sock.close()
 os.system(f'./client -r "{peer_address[0]}:{peer_address[1]}" -l ":20000" -mode fast3 -nocomp -sockbuf 16777217 --crypt none')
